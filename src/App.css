@@ -1,6 +1,6 @@
 .App {
   font-family: sans-serif;
-  text-align: center;
+ 
 }
 .profile-pic {
   height: 300px;
@@ -27,4 +27,29 @@
 
   .add-color{
     display: flex;
+  }
+
+  .book-container{
+    width: 250px;
+  }
+
+  .book-poster{
+    width: 250px;
+    height: 300px;
+    object-fit: cover;
+  }
+  .book-spec{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .book-name{
+    font-size:25px;
+    margin: 0;
+  }
+  .book-summary{
+    margin-top: 0;
+  }
+  .book-rating{
+    font-size: 18px;;
   }

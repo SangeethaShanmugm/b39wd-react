@@ -76,10 +76,37 @@ function App() {
     {/* <Counter />
     <Counter />
     <Counter /> */}
-   <AddColor />
+   {/* <AddColor /> */}
+
+   <Book />
   </div>
   );
 }
+
+
+function Book() {
+
+  const books = {
+    name: "charlotte's web ",
+    poster: "https://cdn.britannica.com/64/103064-050-295C6879/Charlottes-Web-EB-Garth-Williams.jpg",
+    rating: 8,
+    summary:"When Wilbur, a pig adopted by young Fern, grows up, she sells it to her uncle who intends to slaughter it for food. Charlotte, a spider, vows to save the pig's life."
+  }
+
+  return(
+    <div className='book-container'>
+      <img className="book-poster" src={books.poster} alt={books.name} />
+     <div className='book-spec'>
+     <h1 className='book-name'>{books.name} </h1>
+      <h3 className='book-rating'>⭐{books.rating}</h3>
+      </div>
+      <p className='book-summary'>{books.summary}</p>
+    
+    </div>
+  )
+}
+
+
 
 
 export default App;
