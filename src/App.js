@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { AddColor } from './AddColor';
 
 function App() {
    //js starts
@@ -82,115 +82,11 @@ function App() {
 }
 
 
+export default App;
+
+
 //name - props
 //component
 // 1. First letter must be capital
 // 2. It return a JSX element
 // component - declaration
-
-function Welcome({name}) {
-  // const name = "Likhith";
-  console.log(name);
-  return <div>Welcome {name} 😀</div>;
-}
-
-function Msg({ name, pic}) {
-  return (
-    <div className='user-container'>
-      <img className="profile-pic" src={pic} alt={name} />
-      <h1>Hi, {name}</h1>
-      <Counter />
-    </div>
-  );
-}
-
-//JSX -- js XML  - JSX will be converted to javascript
-//webpack + babel
-
-//className - class in JS - reserved keyword
-// {} = Template syntax
-// props -object - you can pass like an argument in a function
-
-// function Fun() {
-//   return <div>Hello Everyone </div>;
-// }
-
-
-
-function Counter() {  
-  
-  // let like = 10;
-  const  [like, setLike] = useState(0);
-  const  [dislike, setDislike] = useState(0);
-
-  return(
-    <div>
-    {/* onClick - camelCase */}
-      <button className="btn-like"
-      onClick={() => { setLike(like + 1)  }}
-      >👍 {like}</button>   
-      <button className="btn-dislike"
-      onClick={() => { setDislike(dislike + 1)  }}
-      >👎 {dislike}</button>  
-    </div>
-  )
-}
-
-//hook - useState
-//const [state, setState] = useState(intitalvalue)
-// const  [like, setLike] = useState(10)
-//state of art technology & state of mind - meaning 
-
-
-function AddColor(){
-  // const color ="skyblue";
-  //useState - string
- const [ color, setColor] = useState("skyblue")
-//useState - array of string
-// const colorList = ["orange", "purple", "red", "pink"]
-
-const [colorList, setColorList] = useState(["orange", "purple", "pink"])
-
-  const styles ={
-    backgroundColor: color,
-    fontSize: "30px",
-  }
-  return(
-    <div>
-      <div className="add-color">
-      <input 
-      // onChange -typing event , setColor -react-> value -> word
-      onChange={(event) =>setColor(event.target.value) }
-      style={styles}  
-      type="text"
-      // placeholder="Enter a color"
-      value={color}
-       />
-       <button
-       // copy the colorList and add newcolor to it
-       onClick={()=> setColorList([...colorList, color ]) }
-        >Add Color</button>
-      </div>
-      {colorList.map((clr) => (
-        <ColorBox color={clr} />
-      ))}
-       
-       {/* <ColorBox />
-       <ColorBox /> */}
-    </div>
-  )
-}
-
-function ColorBox({color}) {
-  const styles ={
-    backgroundColor: color,
-    height: "35px",
-    width: "380px",
-    marginTop: "20px",
-  }
-  return (
-    <div style={styles}></div>
-  )
-}
-
-export default App;
