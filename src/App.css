@@ -53,3 +53,10 @@
   .book-rating{
     font-size: 18px;;
   }
+
+  .book-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-around;
+  }
