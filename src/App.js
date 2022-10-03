@@ -1,6 +1,7 @@
 import './App.css';
 import { AddColor } from './AddColor';
 import { Counter } from './Counter';
+import { useState } from 'react';
 
 const INITIAL_BOOK_LIST = [
   {
@@ -46,7 +47,7 @@ const INITIAL_BOOK_LIST = [
   {
     name: "The 5 AM Club",
     poster: "https://m.media-amazon.com/images/I/71zytzrg6lL.jpg",
-    rating: 8.6,
+    rating: 6.5,
     summary:
       "In The 5 AM Club: Own Your Morning. Elevate Your Life, he uses a fictitious story about a billionaire mentor teaching a struggling artist and an entrepreneur about the importance of waking up early to show how revolutionary it is for success."
   },
@@ -60,7 +61,7 @@ const INITIAL_BOOK_LIST = [
   {
     name: "I Can Do It",
     poster: "https://images-na.ssl-images-amazon.com/images/I/81T3L1yTJwL.jpg",
-    rating: 8,
+    rating: 7.9,
     summary:
       "Hay shows you that you “can do it”—that is, change and improve virtually every aspect of your life—by understanding and using affirmations correctly. Louise explains that every thought you think and every word you speak is an affirmation. Even your self-talk, your internal dialogue, is a stream of affirmations."
   }
@@ -97,31 +98,40 @@ function App() {
  
   return (
     <div className="book-list">   
-    {bookList.map((bk) => (
-      <Book books={bk} />
+    {bookList.map((bk, index) => (
+      <Book key={index} books={bk} />
     ))}  
   </div>
   );
 }
 
 function Book( { books } ) {
+  
+  const [show, setShow]  = useState(true);
+ 
+  //conditional Styling
+  const styles = {
+    color: books.rating > 8 ? "green" :  "red",
+  }
+  
+  //true -visible - block
+  //false -hide - none
 
-  // const books = {
-  //   name: "charlotte's web ",
-  //   poster: "https://cdn.britannica.com/64/103064-050-295C6879/Charlottes-Web-EB-Garth-Williams.jpg",
-  //   rating: 8,
-  //   summary:"When Wilbur, a pig adopted by young Fern, grows up, she sells it to her uncle who intends to slaughter it for food. Charlotte, a spider, vows to save the pig's life.",
-  //   language:"English"
-  // }
+  const summaryStyle =  {
+    display: show ? "block" : "none",
+  }
 
   return(
     <div className='book-container'>
       <img className="book-poster" src={books.poster} alt={books.name} />
      <div className='book-spec'>
      <h1 className='book-name'>{books.name} </h1>
-      <h3 className='book-rating'>⭐{books.rating}</h3>
+      <h3 style={styles}  className='book-rating'>⭐{books.rating}</h3>
       </div>
-      <p className='book-summary'>{books.summary}</p>    
+      <button
+      onClick={() => setShow(!show)}
+      >Toggle description</button>
+      <p style={summaryStyle}  className='book-summary'>{books.summary}</p>    
       <Counter />
     </div>
   )
