@@ -1,7 +1,8 @@
 import './App.css';
 import { AddColor } from './AddColor';
-import { Counter } from './Counter';
-import { useState } from 'react';
+import { Routes, Route, Link, useParams } from "react-router-dom";
+import { Msg } from './Msg';
+import { Book } from './Book';
 
 const INITIAL_BOOK_LIST = [
   {
@@ -69,7 +70,54 @@ const INITIAL_BOOK_LIST = [
 
 
 function App() {
-   
+    
+ 
+  return (
+    <div>
+    {/* Link - change page without refresh/its work is to without refresh change URL, nav - get the correct route*/}
+       <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/books">Books</Link>
+          </li>
+          <li>
+            <Link to="/add-color">Add-Color</Link>
+          </li>
+          <li>
+            <Link to="/users">Users</Link>
+          </li>
+          {/* <li>
+            <Link to="/somewhere">Some Where</Link>
+          </li> */}
+        </ul>
+       </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/books" element={<BookList />} />
+        <Route path="/books/:bookid" element={<BookDetails />} />
+        <Route path="/add-color" element={<AddColor />} />
+        <Route path="/users" element={<UserList />} />       
+      </Routes>
+
+    </div>
+  );
+}
+
+function BookDetails() {
+
+  const { bookid } =  useParams();
+
+  return (
+    <h1>Book Detail Page {bookid}</h1>
+  )
+}
+
+function UserList() {
+  
   const users = [
     {
       name:"Sathish",
@@ -93,52 +141,32 @@ function App() {
       pic: "https://www.whatsappprofiledpimages.com/wp-content/uploads/2021/11/alone-Best-Dp-Profile-Images-For-Instagram-photo.gif"
     }
   ]
-  
-  const bookList = INITIAL_BOOK_LIST;
- 
+
   return (
-    <div className="book-list">   
-    {bookList.map((bk, index) => (
-      <Book key={index} books={bk} />
-    ))}  
-  </div>
-  );
-}
-
-function Book( { books } ) {
-  
-  const [show, setShow]  = useState(true);
- 
-  //conditional Styling
-  const styles = {
-    color: books.rating > 8 ? "green" :  "red",
-  }
-  
-  //true -visible - block
-  //false -hide - none
-
-  const summaryStyle =  {
-    display: show ? "block" : "none",
-  }
-
-  return(
-    <div className='book-container'>
-      <img className="book-poster" src={books.poster} alt={books.name} />
-     <div className='book-spec'>
-     <h1 className='book-name'>{books.name} </h1>
-      <h3 style={styles}  className='book-rating'>⭐{books.rating}</h3>
-      </div>
-      <button
-      onClick={() => setShow(!show)}
-      >Toggle description</button>
-      <p style={summaryStyle}  className='book-summary'>{books.summary}</p>    
-      <Counter />
+    <div>
+      {users.map((user) => (
+             <Msg name={user.name} pic={user.pic} />
+        ))}
     </div>
   )
 }
 
+function Home() {
+  return <h1>Welcome to the Book App🥳🥳🎆🎇</h1>
+}
 
+function BookList() {
 
+  const bookList = INITIAL_BOOK_LIST;
+
+  return (
+    <div className="book-list">   
+    {bookList.map((bk, index ) => (
+      <Book key={index} books={bk} id={index} />
+    ))}  
+  </div>
+  )
+}
 
 export default App;
 
@@ -148,3 +176,9 @@ export default App;
 // 1. First letter must be capital
 // 2. It return a JSX element
 // component - declaration
+
+//function Color(color) {
+//   console.log(`updated color: ${color}`);
+//   document.documentElement.style.setProperty('colors', color)
+// }
+
