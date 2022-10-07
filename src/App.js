@@ -3,6 +3,11 @@ import { AddColor } from './AddColor';
 import { Routes, Route, Link, useParams } from "react-router-dom";
 import { Msg } from './Msg';
 import { Book } from './Book';
+import { useState } from 'react';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
+
 
 const INITIAL_BOOK_LIST = [
   {
@@ -107,6 +112,8 @@ function App() {
   );
 }
 
+//eg - books/1
+//useParama - extract (number - id/index) from URL
 function BookDetails() {
 
   const { bookid } =  useParams();
@@ -157,16 +164,65 @@ function Home() {
 
 function BookList() {
 
-  const bookList = INITIAL_BOOK_LIST;
+  // const bookList = INITIAL_BOOK_LIST;
+
+  const [bookList, setBookList] = useState(INITIAL_BOOK_LIST)
+
+   const [ name, setName ] = useState("")
+   const [ poster, setPoster ] = useState("")
+   const [ rating, setRating ] = useState("")
+   const [ summary, setSummary] = useState("")
 
   return (
+    <div>
+    <div className='add-book-form'>
+       <input
+          // onChange -typing event , setColor -react-> value -> word
+          onChange={(event) => setName(event.target.value)}       
+          placeholder="Enter a name"
+           />
+           <input
+          // onChange -typing event , setColor -react-> value -> word
+          onChange={(event) => setPoster(event.target.value)}       
+          placeholder="Enter a poster"
+           />
+           <input
+          // onChange -typing event , setColor -react-> value -> word
+          onChange={(event) => setRating(event.target.value)}       
+          placeholder="Enter a rating"
+           />
+       
+          <TextField 
+          onChange={(event) => setSummary(event.target.value)}      
+           label="Summary"
+           variant="standard" />
+
+           <Button 
+            // copy the bookList and add newBook to it - newBook is an object
+             onClick = {() => {
+            const newBook = {
+              name: name,
+              poster:poster,
+              rating: rating,
+              summary: summary,
+            }
+            setBookList([...bookList, newBook])
+           }}
+           variant="contained">Add Book</Button>
+
+    </div>
     <div className="book-list">   
     {bookList.map((bk, index ) => (
       <Book key={index} books={bk} id={index} />
     ))}  
   </div>
+  </div>
+ 
+    
   )
 }
+
+
 
 export default App;
 

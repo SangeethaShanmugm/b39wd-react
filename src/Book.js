@@ -39,3 +39,13 @@ export function Book({ books, id }) {
     </div>
   );
 }
+
+
+//eg - navigate(-) -  back
+// navigate(+) - forward -next
+//(-4) - 4 page backward
+
+//Task  - 15 mins
+//Add Books - similar to Add Color
+// 4 input - book name, poster, rating, summary
+//AddBook button

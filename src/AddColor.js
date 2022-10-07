@@ -4,14 +4,16 @@ import { ColorBox } from './ColorBox';
 //hook - useState
 //const [state, setState] = useState(intitalvalue)
 // const  [like, setLike] = useState(10)
-//state of art technology & state of mind - meaning 
+//state of art technology & state of mind - meaning
+const INITIAL_COLOR_LIST = ["orange", "purple", "pink"];
+
 export function AddColor() {
   // const color ="skyblue";
   //useState - string
   const [color, setColor] = useState("skyblue");
   //useState - array of string
   // const colorList = ["orange", "purple", "red", "pink"]
-  const [colorList, setColorList] = useState(["orange", "purple", "pink"]);
+  const [colorList, setColorList] = useState(INITIAL_COLOR_LIST);
 
   const styles = {
     backgroundColor: color,
