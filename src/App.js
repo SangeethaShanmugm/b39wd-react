@@ -1,11 +1,11 @@
 import './App.css';
 import { AddColor } from './AddColor';
-import { Routes, Route, Link, useParams } from "react-router-dom";
-import { Msg } from './Msg';
-import { Book } from './Book';
+import { Routes, Route, Link } from "react-router-dom";
 import { useState } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import { BookDetails } from './BookDetails';
+import { UserList } from './UserList';
+import { Home } from './Home';
+import { BookList } from './BookList';
 
 
 
@@ -40,7 +40,8 @@ const INITIAL_BOOK_LIST = [
       "https://m.media-amazon.com/images/I/81fdQIY6ykL.jpg",
     summary:
       "There's no secret to The Secret. The book and movie simply state that your thoughts control the universe. Through this “law of attraction” you “manifest” your desires. “It is exactly like placing an order from a catalogue",
-    rating: 8.8
+    rating: 8.8,
+    trailer: "https://www.youtube.com/embed/ae50DX0HDb8",
   },
   {
     name: "Discover Your Destiny",
@@ -75,8 +76,9 @@ const INITIAL_BOOK_LIST = [
 
 
 function App() {
-    
- 
+    //Lifting the state up -> Lifted from child to parent 
+  const [bookList, setBookList] = useState(INITIAL_BOOK_LIST)
+
   return (
     <div>
     {/* Link - change page without refresh/its work is to without refresh change URL, nav - get the correct route*/}
@@ -102,126 +104,25 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/books" element={<BookList />} />
-        <Route path="/books/:bookid" element={<BookDetails />} />
+        <Route path="/books" element={<BookList  bookList={bookList} setBookList={setBookList}/>} />
+        <Route path="/books/:bookid" element={<BookDetails bookList={bookList}/>} />
         <Route path="/add-color" element={<AddColor />} />
-        <Route path="/users" element={<UserList />} />       
+        <Route path="/users" element={<UserList />} />  
+        <Route path="*" element={<NotFoundPage />} />        
       </Routes>
 
     </div>
   );
 }
 
-//eg - books/1
-//useParama - extract (number - id/index) from URL
-function BookDetails() {
 
-  const { bookid } =  useParams();
-
-  return (
-    <h1>Book Detail Page {bookid}</h1>
-  )
-}
-
-function UserList() {
-  
-  const users = [
-    {
-      name:"Sathish",
-      pic:"https://scontent.fixm1-1.fna.fbcdn.net/v/t1.6435-9/121193596_2200160230128519_8049283258679180567_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=UMSDv1lTNF8AX9l0sMK&_nc_ht=scontent.fixm1-1.fna&oh=00_AT-PN6LtxpJWEgn1Lpr71JPig499DKWKrRB5sEYkwyyYEw&oe=6358B5E7",
-        
-    },
-    {
-      name:"Navyasri",
-      pic:"https://images.pexels.com/photos/1382731/pexels-photo-1382731.jpeg?auto=compress&cs=tinysrgb&w=600",
-    },
-    {
-      name:"persis",
-      pic:"https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600", 
-    },
-    {
-      name:"manish",
-      pic:"https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg",
-    },
-    {
-      name: "Sneha",
-      pic: "https://www.whatsappprofiledpimages.com/wp-content/uploads/2021/11/alone-Best-Dp-Profile-Images-For-Instagram-photo.gif"
-    }
-  ]
-
+function NotFoundPage() {
   return (
     <div>
-      {users.map((user) => (
-             <Msg name={user.name} pic={user.pic} />
-        ))}
+      <img className="not-found" src="https://miro.medium.com/max/1400/1*zBFBJktPD3_z0S_35kO5Hg.gif" alt="404 not found"/>
     </div>
   )
 }
-
-function Home() {
-  return <h1>Welcome to the Book App🥳🥳🎆🎇</h1>
-}
-
-function BookList() {
-
-  // const bookList = INITIAL_BOOK_LIST;
-
-  const [bookList, setBookList] = useState(INITIAL_BOOK_LIST)
-
-   const [ name, setName ] = useState("")
-   const [ poster, setPoster ] = useState("")
-   const [ rating, setRating ] = useState("")
-   const [ summary, setSummary] = useState("")
-
-  return (
-    <div>
-    <div className='add-book-form'>
-       <input
-          // onChange -typing event , setColor -react-> value -> word
-          onChange={(event) => setName(event.target.value)}       
-          placeholder="Enter a name"
-           />
-           <input
-          // onChange -typing event , setColor -react-> value -> word
-          onChange={(event) => setPoster(event.target.value)}       
-          placeholder="Enter a poster"
-           />
-           <input
-          // onChange -typing event , setColor -react-> value -> word
-          onChange={(event) => setRating(event.target.value)}       
-          placeholder="Enter a rating"
-           />
-       
-          <TextField 
-          onChange={(event) => setSummary(event.target.value)}      
-           label="Summary"
-           variant="standard" />
-
-           <Button 
-            // copy the bookList and add newBook to it - newBook is an object
-             onClick = {() => {
-            const newBook = {
-              name: name,
-              poster:poster,
-              rating: rating,
-              summary: summary,
-            }
-            setBookList([...bookList, newBook])
-           }}
-           variant="contained">Add Book</Button>
-
-    </div>
-    <div className="book-list">   
-    {bookList.map((bk, index ) => (
-      <Book key={index} books={bk} id={index} />
-    ))}  
-  </div>
-  </div>
- 
-    
-  )
-}
-
 
 
 export default App;
@@ -238,3 +139,17 @@ export default App;
 //   document.documentElement.style.setProperty('colors', color)
 // }
 
+//Lifting state up - parent child concept 
+
+// BookList(data) -> Book -> Counter(data)
+ //              --> Contact(data)
+//BookDetails -->  
+
+// About    Contact
+
+
+//React flow in one direction / Pass from parent to child - ✅
+// Child to parent ❌
+
+//                    App (bookList, setBookList) - parent
+//        BookList         BookDetails   -child

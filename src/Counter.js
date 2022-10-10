@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import IconButton from '@mui/material/IconButton';
+import Badge from '@mui/material/Badge';
 
 //JSX -- js XML  - JSX will be converted to javascript
 //webpack + babel
@@ -17,12 +19,30 @@ export function Counter() {
   return (
     <div>
       {/* onClick - camelCase */}
-      <button className="btn-like"
+      {/* <button className="btn-like"
         onClick={() => { setLike(like + 1); }}
-      >👍 {like}</button>
-      <button className="btn-dislike"
-        onClick={() => { setDislike(dislike + 1); }}
-      >👎 {dislike}</button>
+      >👍 {like}</button> */}
+
+      <IconButton 
+       onClick={() => { setLike(like + 1); }}
+       className ="bt-sz-lg"
+       aria-label="like-btn"
+       color="primary">    
+      <Badge badgeContent={like} color="primary">
+      👍
+      </Badge>
+      </IconButton>
+
+      <IconButton 
+       onClick={() => { setDislike(dislike + 1); }}
+       className ="bt-sz-lg"
+       aria-label="dislike-btn"
+       color="error">      
+      <Badge badgeContent={dislike} color="primary">
+      👎 
+      </Badge>
+      </IconButton>
+     
     </div>
   );
 }
