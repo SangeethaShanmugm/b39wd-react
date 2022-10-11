@@ -1,6 +1,6 @@
 import './App.css';
 import { AddColor } from './AddColor';
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { useState } from 'react';
 import { BookDetails } from './BookDetails';
 import { UserList } from './UserList';
@@ -107,8 +107,10 @@ function App() {
         <Route path="/books" element={<BookList  bookList={bookList} setBookList={setBookList}/>} />
         <Route path="/books/:bookid" element={<BookDetails bookList={bookList}/>} />
         <Route path="/add-color" element={<AddColor />} />
-        <Route path="/users" element={<UserList />} />  
-        <Route path="*" element={<NotFoundPage />} />        
+        <Route path="/users" element={<UserList />} /> 
+        <Route path="/title" element={<Navigate replace to="/books"/>} />
+        <Route path="/404" element={<NotFoundPage />} />      
+        <Route path="*" element={<Navigate replace to="/404" />} />        
       </Routes>
 
     </div>
@@ -116,10 +118,10 @@ function App() {
 }
 
 
-function NotFoundPage() {
+export function NotFoundPage() {
   return (
     <div>
-      <img className="not-found" src="https://miro.medium.com/max/1400/1*zBFBJktPD3_z0S_35kO5Hg.gif" alt="404 not found"/>
+      <img className="not-found" src="https://cdn.dribbble.com/users/1175431/screenshots/6188233/404-error-dribbble-800x600.gif" alt="404 not found"/>
     </div>
   )
 }
@@ -153,3 +155,8 @@ export default App;
 
 //                    App (bookList, setBookList) - parent
 //        BookList         BookDetails   -child
+
+
+//Task
+// /books/add -><AddBook />
+//Add Book - book added -> /books( Book List page )

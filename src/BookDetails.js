@@ -1,6 +1,7 @@
 import { useParams, useNavigate} from "react-router-dom";
 import Button from '@mui/material/Button';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { NotFoundPage } from "./App";
 
 //eg - books/1
 //useParama - extract (number - id/index) from URL
@@ -11,6 +12,12 @@ export function BookDetails({ bookList }) {
   console.log(bookList, book);
 
   const navigate = useNavigate();
+ 
+  if(!book) {
+    // navigate("/404")
+    return <NotFoundPage />
+  }
+
 
   return (
     <div>

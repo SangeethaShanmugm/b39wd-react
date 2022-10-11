@@ -33,7 +33,8 @@ export function Book({ books, id }) {
       {/* <button
       onClick={() => navigate("/books/" + id)}
       >Info</button> */}
-
+      {/* <ExpandLessIcon /> 
+      <ExpandMoreIcon /> */}
        <IconButton   
        onClick={() => setShow(!show)}     
        className ="bt-sz-lg"

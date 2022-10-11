@@ -38,7 +38,7 @@ export function Counter() {
        className ="bt-sz-lg"
        aria-label="dislike-btn"
        color="error">      
-      <Badge badgeContent={dislike} color="primary">
+      <Badge badgeContent={dislike} color="error">
       👎 
       </Badge>
       </IconButton>
