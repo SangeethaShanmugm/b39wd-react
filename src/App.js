@@ -1,12 +1,18 @@
 import './App.css';
 import { AddColor } from './AddColor';
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import { BookDetails } from './BookDetails';
 import { UserList } from './UserList';
 import { Home } from './Home';
 import { BookList } from './BookList';
-
+import { AddBook } from './AddBook';
+import { NotFoundPage } from './NotFoundPage';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
 
 
 const INITIAL_BOOK_LIST = [
@@ -74,15 +80,47 @@ const INITIAL_BOOK_LIST = [
   }
 ];
 
+// 1. Creating - createContext
+// 2. Publisher - provider - context.Provider
+// 3. Subscriber - useContext - useContext(context)
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function App() {
     //Lifting the state up -> Lifted from child to parent 
   const [bookList, setBookList] = useState(INITIAL_BOOK_LIST)
+  const navigate = useNavigate();
 
   return (
-    <div>
+    <ThemeProvider theme={theme}>
+    <CssBaseline />
+     <div>
+     <AppBar position="static">
+     <Toolbar>
+      <Button
+      onClick={() => navigate("/")}
+      color="inherit" >Home</Button> 
+      <Button 
+      onClick={() => navigate("/books")}
+      color="inherit">Books</Button> 
+      <Button 
+      onClick={() => navigate("/books/add")}
+      color="inherit">Add Book</Button> 
+      <Button 
+      onClick={() => navigate("/add-color")}
+      color="inherit">Color Game</Button> 
+      <Button 
+      onClick={() => navigate("/users")}
+      color="inherit">Users</Button> 
+     </Toolbar>
+     </AppBar>
+
     {/* Link - change page without refresh/its work is to without refresh change URL, nav - get the correct route*/}
-       <nav>
+       {/* <nav>
         <ul>
           <li>
             <Link to="/">Home</Link>
@@ -91,21 +129,26 @@ function App() {
             <Link to="/books">Books</Link>
           </li>
           <li>
-            <Link to="/add-color">Add-Color</Link>
+            <Link to="/books/add">Add Book</Link>
+          </li>
+          <li>
+            <Link to="/add-color">Color Game</Link>
           </li>
           <li>
             <Link to="/users">Users</Link>
-          </li>
+          </li> */}
+         
           {/* <li>
             <Link to="/somewhere">Some Where</Link>
           </li> */}
-        </ul>
-       </nav>
+        {/* </ul>
+       </nav> */}
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/books" element={<BookList  bookList={bookList} setBookList={setBookList}/>} />
         <Route path="/books/:bookid" element={<BookDetails bookList={bookList}/>} />
+        <Route path="/books/add" element={<AddBook bookList={bookList} setBookList={setBookList}/>} />
         <Route path="/add-color" element={<AddColor />} />
         <Route path="/users" element={<UserList />} /> 
         <Route path="/title" element={<Navigate replace to="/books"/>} />
@@ -114,18 +157,9 @@ function App() {
       </Routes>
 
     </div>
+    </ThemeProvider>
   );
 }
-
-
-export function NotFoundPage() {
-  return (
-    <div>
-      <img className="not-found" src="https://cdn.dribbble.com/users/1175431/screenshots/6188233/404-error-dribbble-800x600.gif" alt="404 not found"/>
-    </div>
-  )
-}
-
 
 export default App;
 
@@ -158,5 +192,5 @@ export default App;
 
 
 //Task
-// /books/add -><AddBook />
-//Add Book - book added -> /books( Book List page )
+//    /books/add -><AddBook />
+//   Add Book - book added -> /books( Book List page )
