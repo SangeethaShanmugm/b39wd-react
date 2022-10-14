@@ -1,7 +1,7 @@
 import './App.css';
 import { AddColor } from './AddColor';
 import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BookDetails } from './BookDetails';
 import { UserList } from './UserList';
 import { Home } from './Home';
@@ -16,9 +16,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Paper from '@mui/material/Paper';
+import { Example } from './example';
 
 // const INITIAL_BOOK_LIST = [
 //   {
+  //   id= 100,
 //     name: "Charlotte's web",
 //     poster:
 //       "https://cdn.britannica.com/64/103064-050-295C6879/Charlottes-Web-EB-Garth-Williams.jpg",
@@ -99,12 +101,12 @@ function App() {
     },
   });
 
-  
-fetch("https://63479fe4db76843976aee6fb.mockapi.io/books")
-.then(res => res.json())
-.then(data => {
-  setBookList(data);
-})
+  useEffect(() => {
+    fetch("https://63479fe4db76843976aee6fb.mockapi.io/books")
+    .then((res) => res.json())
+    .then((data) => console.log(data))
+  }, [])
+
 
   
   const navigate = useNavigate();
@@ -137,7 +139,7 @@ fetch("https://63479fe4db76843976aee6fb.mockapi.io/books")
       startIcon={mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
       onClick={() => setMode(mode === "light" ? "dark" : "light")}
       color="inherit">{mode === "light" ? "dark" : "light"} mode</Button> 
-     </Toolbar>
+      </Toolbar>
      </AppBar>
 
     {/* Link - change page without refresh/its work is to without refresh change URL, nav - get the correct route*/}
@@ -167,7 +169,7 @@ fetch("https://63479fe4db76843976aee6fb.mockapi.io/books")
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/books" element={<BookList  bookList={bookList} setBookList={setBookList}/>} />
+        <Route path="/books" element={<BookList />} />
         <Route path="/books/:bookid" element={<BookDetails bookList={bookList}/>} />
         <Route path="/books/add" element={<AddBook bookList={bookList} setBookList={setBookList}/>} />
         <Route path="/add-color" element={<AddColor />} />

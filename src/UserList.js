@@ -1,4 +1,5 @@
 import { Msg } from './Msg';
+import { Example } from './example';
 
 export function UserList() {
 
@@ -27,9 +28,11 @@ export function UserList() {
 
   return (
     <div>
-      {users.map((user) => (
-        <Msg name={user.name} pic={user.pic} />
+    <Example/>
+      {users.map((user, index) => (
+        <Msg key={index} name={user.name} pic={user.pic} />
       ))}
+
     </div>
   );
 }

@@ -1,17 +1,23 @@
 import { Book } from './Book';
-import { useState } from 'react';
+import {useState, useEffect } from 'react';
 
 
-export function BookList({ bookList, setBookList }) {
+
+export function BookList() {
   // const bookList = INITIAL_BOOK_LIST;
+  const [bookList, setBookList] = useState([])
 
-  const [name, setName] = useState("");
-  const [poster, setPoster] = useState("");
-  const [rating, setRating] = useState("");
-  const [summary, setSummary] = useState("");
-  const [trailer, setTrailer] = useState("");
+  useEffect(() => {
+    fetch("https://63479fe4db76843976aee6fb.mockapi.io/books", {
+      method: "GET"
+    })
+    .then((res) => res.json())
+    .then((data) => setBookList(data))
+  }, [])
 
-  return (
+
+
+   return (
     <div>
        <div className="book-list">
         {bookList.map((bk, index) => (
